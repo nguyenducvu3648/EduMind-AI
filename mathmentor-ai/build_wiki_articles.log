@@ -1,0 +1,207 @@
+Found 111 topic groups
+  [11] Giá trị lượng giác của góc lượng giác (14 chunks) -> gi-tr-l-ng-gi-c-c-a-g-c-l-ng-gi-c-2
+    OK (7358 chars)
+  [11] Khái niệm mở đầu (3 chunks) -> kh-i-ni-m-m-u-2
+    OK (1545 chars)
+  [11] Lý Thuyết phép biến hình (2 chunks) -> l-thuy-t-ph-p-bi-n-h-nh-2
+    OK (1563 chars)
+  [11] Lý thuyết Hoán vị - Chỉnh hợp - Tổ hợp (5 chunks) -> l-thuy-t-ho-n-v-ch-nh-h-p-t-h-p-2
+    SKIP (LLM fail)
+  [11] Lý thuyết Phép đối xứng trục (4 chunks) -> l-thuy-t-ph-p-i-x-ng-tr-c-2
+    OK (1914 chars)
+  [11] Lý thuyết Quy tắc tính đạo hàm (3 chunks) -> l-thuy-t-quy-t-c-t-nh-o-h-m-2
+    OK (1291 chars)
+  [11] Lý thuyết Vi phân (2 chunks) -> l-thuy-t-vi-ph-n-2
+    OK (917 chars)
+  [11] Lý thuyết cấp số cộng (16 chunks) -> l-thuy-t-c-p-s-c-ng-2
+    SKIP (LLM fail)
+  [11] Lý thuyết cấp số nhân (12 chunks) -> l-thuy-t-c-p-s-nh-n-2
+    OK (1957 chars)
+  [11] Lý thuyết dãy số (4 chunks) -> l-thuy-t-d-y-s-2
+    OK (3296 chars)
+  [11] Lý thuyết hai mặt phẳng vuông góc (4 chunks) -> l-thuy-t-hai-m-t-ph-ng-vu-ng-g-c-2
+    SKIP (LLM fail)
+  [11] Lý thuyết hai đường thẳng vuông góc (5 chunks) -> l-thuy-t-hai-ng-th-ng-vu-ng-g-c-2
+    OK (2876 chars)
+  [11] Lý thuyết hàm số lượng giác (4 chunks) -> l-thuy-t-h-m-s-l-ng-gi-c-2
+    SKIP (LLM fail)
+  [11] Lý thuyết hình biểu diễn của hình không gian trên mặt phẳng (2 chunks) -> l-thuy-t-h-nh-bi-u-di-n-c-a-h-nh-kh-ng-gian-tr-n-m-t-ph-ng-2
+    OK (1712 chars)
+  [11] Lý thuyết hình lăng trụ, hình hộp và hình chóp cụt (2 chunks) -> l-thuy-t-h-nh-l-ng-tr-h-nh-h-p-v-h-nh-ch-p-c-t-2
+    OK (1625 chars)
+  [11] Lý thuyết khoảng cách (4 chunks) -> l-thuy-t-kho-ng-c-ch-2
+    OK (3122 chars)
+  [11] Lý thuyết khái niệm về phép dời hình và hai hình bằng nhau (2 chunks) -> l-thuy-t-kh-i-ni-m-v-ph-p-d-i-h-nh-v-hai-h-nh-b-ng-nhau-2
+    OK (1451 chars)
+  [11] Lý thuyết một số phương trình lượng giác thường gặp (4 chunks) -> l-thuy-t-m-t-s-ph-ng-tr-nh-l-ng-gi-c-th-ng-g-p-2
+    OK (2032 chars)
+  [11] Lý thuyết nhị thức Niu - Tơn (5 chunks) -> l-thuy-t-nh-th-c-niu-t-n-2
+    OK (2356 chars)
+  [11] Lý thuyết phép quay (3 chunks) -> l-thuy-t-ph-p-quay-2
+    OK (1964 chars)
+  [11] Lý thuyết phép thử và biến cố (7 chunks) -> l-thuy-t-ph-p-th-v-bi-n-c-2
+    SKIP (LLM fail)
+  [11] Lý thuyết phép tịnh tiến (3 chunks) -> l-thuy-t-ph-p-t-nh-ti-n
+    SKIP (LLM fail)
+  [11] Lý thuyết phép vị tự (5 chunks) -> l-thuy-t-ph-p-v-t-2
+    OK (2134 chars)
+  [11] Lý thuyết phép đối xứng tâm (3 chunks) -> l-thuy-t-ph-p-i-x-ng-t-m-2
+    OK (1729 chars)
+  [11] Lý thuyết phép đồng dạng (4 chunks) -> l-thuy-t-ph-p-ng-d-ng-2
+    OK (2441 chars)
+  [11] Lý thuyết phương pháp quy nạp toán học (2 chunks) -> l-thuy-t-ph-ng-ph-p-quy-n-p-to-n-h-c-2
+    OK (1123 chars)
+  [11] Lý thuyết quy tắc đếm (2 chunks) -> l-thuy-t-quy-t-c-m-2
+    OK (2632 chars)
+  [11] Lý thuyết véc tơ trong không gian (3 chunks) -> l-thuy-t-v-c-t-trong-kh-ng-gian-2
+    OK (2901 chars)
+  [11] Lý thuyết về giới hạn của dãy số (11 chunks) -> l-thuy-t-v-gi-i-h-n-c-a-d-y-s-2
+    OK (2520 chars)
+  [11] Lý thuyết về giới hạn của hàm số (7 chunks) -> l-thuy-t-v-gi-i-h-n-c-a-h-m-s-2
+    OK (3136 chars)
+  [11] Lý thuyết về hàm số liên tục (2 chunks) -> l-thuy-t-v-h-m-s-li-n-t-c-2
+    SKIP (LLM fail)
+  [11] Lý thuyết xác suất và biến cố (4 chunks) -> l-thuy-t-x-c-su-t-v-bi-n-c-2
+    OK (2869 chars)
+  [11] Lý thuyết Đạo hàm cấp hai (3 chunks) -> l-thuy-t-o-h-m-c-p-hai-2
+    OK (1528 chars)
+  [11] Lý thuyết đường thẳng vuông góc với mặt phẳng (6 chunks) -> l-thuy-t-ng-th-ng-vu-ng-g-c-v-i-m-t-ph-ng-2
+    OK (3286 chars)
+  [11] Lý thuyết đạo hàm của hàm số lượng giác (2 chunks) -> l-thuy-t-o-h-m-c-a-h-m-s-l-ng-gi-c-2
+    OK (964 chars)
+  [11] Lý thuyết định nghĩa tính chất của hai mặt phẳng song song (2 chunks) -> l-thuy-t-nh-ngh-a-t-nh-ch-t-c-a-hai-m-t-ph-ng-song-song-2
+    SKIP (LLM fail)
+  [11] Lý thuyết định nghĩa và ý nghĩa của đạo hàm (6 chunks) -> l-thuy-t-nh-ngh-a-v-ngh-a-c-a-o-h-m-2
+    SKIP (LLM fail)
+  [12] Biểu thức tọa độ của phép cộng, trừ, nhân một số với vectơ (10 chunks) -> bi-u-th-c-t-a-c-a-ph-p-c-ng-tr-nh-n-m-t-s-v-i-vect
+    OK (2978 chars)
+  [12] Biểu thức tọa độ của tích vô hướng (8 chunks) -> bi-u-th-c-t-a-c-a-t-ch-v-h-ng-2
+    SKIP (LLM fail)
+  [12] Bảng giá trị lượng giác của các góc đặc biệt (3 chunks) -> b-ng-gi-tr-l-ng-gi-c-c-a-c-c-g-c-c-bi-t-2
+    OK (1907 chars)
+  [12] Bất phương trình bậc nhất hai ẩn - Hệ bất phương trình bậc nhất hai ẩn (2 chunks) -> b-t-ph-ng-tr-nh-b-c-nh-t-hai-n-h-b-t-ph-ng-tr-nh-b-c-nh-t-hai-n-2
+    OK (1454 chars)
+  [12] Các công thức về tính chất của nguyên hàm (7 chunks) -> c-c-c-ng-th-c-v-t-nh-ch-t-c-a-nguy-n-h-m-2
+    OK (1363 chars)
+  [12] Các công thức về tính chất của tích phân (8 chunks) -> c-c-c-ng-th-c-v-t-nh-ch-t-c-a-t-ch-ph-n
+    OK (1542 chars)
+  [12] Các tập con thường dùng của R - Khoảng - Đoạn - Nửa khoảng (2 chunks) -> c-c-t-p-con-th-ng-d-ng-c-a-r-kho-ng-o-n-n-a-kho-ng-2
+    OK (736 chars)
+  [12] Công thức nguyên hàm của một số hàm số sơ cấp (8 chunks) -> c-ng-th-c-nguy-n-h-m-c-a-m-t-s-h-m-s-s-c-p
+    SKIP (LLM fail)
+  [12] Công thức tích của một số với một vectơ trong không gian (9 chunks) -> c-ng-th-c-t-ch-c-a-m-t-s-v-i-m-t-vect-trong-kh-ng-gian-2
+    SKIP (LLM fail)
+  [12] Công thức tích phân của một số hàm số sơ cấp (8 chunks) -> c-ng-th-c-t-ch-ph-n-c-a-m-t-s-h-m-s-s-c-p
+    OK (1988 chars)
+  [12] Công thức tích vô hướng của hai vectơ trong không gian (8 chunks) -> c-ng-th-c-t-ch-v-h-ng-c-a-hai-vect-trong-kh-ng-gian
+    OK (2530 chars)
+  [12] Công thức tính diện tích hình phẳng (10 chunks) -> c-ng-th-c-t-nh-di-n-t-ch-h-nh-ph-ng
+    OK (2449 chars)
+  [12] Công thức tính khoảng biến thiên, khoảng tứ phân vị của mẫu số liệu ghép nhóm (9 chunks) -> c-ng-th-c-t-nh-kho-ng-bi-n-thi-n-kho-ng-t-ph-n-v-c-a-m-u-s-li-u-gh-p-nh-m-2
+    OK (4725 chars)
+  [12] Công thức tính khoảng cách từ một điểm đến một mặt phẳng (8 chunks) -> c-ng-th-c-t-nh-kho-ng-c-ch-t-m-t-i-m-n-m-t-m-t-ph-ng-2
+    OK (1905 chars)
+  [12] Công thức tính phương sai, độ lệch chuẩn của mẫu số liệu ghép nhóm (9 chunks) -> c-ng-th-c-t-nh-ph-ng-sai-l-ch-chu-n-c-a-m-u-s-li-u-gh-p-nh-m-2
+    OK (3788 chars)
+  [12] Công thức tính thể tích của vật thể, của khối tròn xoay (11 chunks) -> c-ng-th-c-t-nh-th-t-ch-c-a-v-t-th-c-a-kh-i-tr-n-xoay
+    OK (3374 chars)
+  [12] Công thức tính tích có hướng của hai vectơ (9 chunks) -> c-ng-th-c-t-nh-t-ch-c-h-ng-c-a-hai-vect-2
+    OK (2241 chars)
+  [12] Công thức tọa độ của một vectơ (9 chunks) -> c-ng-th-c-t-a-c-a-m-t-vect-2
+    OK (3978 chars)
+  [12] Công thức tọa độ của một điểm (9 chunks) -> c-ng-th-c-t-a-c-a-m-t-i-m-2
+    OK (2579 chars)
+  [12] Công thức tọa độ trung điểm (9 chunks) -> c-ng-th-c-t-a-trung-i-m-2
+    SKIP (LLM fail)
+  [12] Công thức tọa độ trọng tâm tam giác (9 chunks) -> c-ng-th-c-t-a-tr-ng-t-m-tam-gi-c-2
+    SKIP (LLM fail)
+  [12] Công thức tổng và hiệu của hai vectơ trong không gian (9 chunks) -> c-ng-th-c-t-ng-v-hi-u-c-a-hai-vect-trong-kh-ng-gian-2
+    OK (3358 chars)
+  [12] Công thức viết phương trình mặt cầu (9 chunks) -> c-ng-th-c-vi-t-ph-ng-tr-nh-m-t-c-u-2
+    OK (2452 chars)
+  [12] Công thức viết phương trình mặt phẳng (9 chunks) -> c-ng-th-c-vi-t-ph-ng-tr-nh-m-t-ph-ng-2
+    SKIP (LLM fail)
+  [12] Công thức viết phương trình đường thẳng (9 chunks) -> c-ng-th-c-vi-t-ph-ng-tr-nh-ng-th-ng-2
+    OK (3010 chars)
+  [12] Công thức xác suất toàn phần và công thức Bayes (13 chunks) -> c-ng-th-c-x-c-su-t-to-n-ph-n-v-c-ng-th-c-bayes-2
+    OK (2194 chars)
+  [12] Công thức xác định GTNN - GTLN của hàm số (9 chunks) -> c-ng-th-c-x-c-nh-gtnn-gtln-c-a-h-m-s-2
+    OK (3771 chars)
+  [12] Công thức xác định cực trị của hàm số (8 chunks) -> c-ng-th-c-x-c-nh-c-c-tr-c-a-h-m-s
+    OK (2349 chars)
+  [12] Công thức xác định đường tiệm cận của đồ thị hàm số (11 chunks) -> c-ng-th-c-x-c-nh-ng-ti-m-c-n-c-a-th-h-m-s
+    SKIP (LLM fail)
+  [12] Công thức xét tính đồng biến, nghịch biến của hàm số (11 chunks) -> c-ng-th-c-x-t-t-nh-ng-bi-n-ngh-ch-bi-n-c-a-h-m-s-2
+    OK (3681 chars)
+  [12] Giao của hai tập hợp (3 chunks) -> giao-c-a-hai-t-p-h-p-2
+    SKIP (LLM fail)
+  [12] Hiệu của hai tập hợp - Phần bù (3 chunks) -> hi-u-c-a-hai-t-p-h-p-ph-n-b-2
+    SKIP (LLM fail)
+  [12] Hàm số (3 chunks) -> h-m-s-2
+    SKIP (LLM fail)
+  [12] Hàm số bậc hai - Đồ thị hàm số bậc hai (3 chunks) -> h-m-s-b-c-hai-th-h-m-s-b-c-hai-2
+    OK (1962 chars)
+  [12] Hàm số chẵn, hàm số lẻ - Xét tính chẵn lẻ của hàm số (3 chunks) -> h-m-s-ch-n-h-m-s-l-x-t-t-nh-ch-n-l-c-a-h-m-s-2
+    OK (1848 chars)
+  [12] Hàm số đồng biến - Hàm số nghịch biến - Sự biến thiên của hàm số (4 chunks) -> h-m-s-ng-bi-n-h-m-s-ngh-ch-bi-n-s-bi-n-thi-n-c-a-h-m-s-2
+    OK (3018 chars)
+  [12] Hợp của hai tập hợp (3 chunks) -> h-p-c-a-hai-t-p-h-p-2
+    SKIP (LLM fail)
+  [12] Khái niệm mệnh đề - Tính đúng sai của một mệnh đê· (2 chunks) -> kh-i-ni-m-m-nh-t-nh-ng-sai-c-a-m-t-m-nh-2
+    OK (1706 chars)
+  [12] Kí hiệu với mọi, tồn tại - Tính đúng sai của mẹnh đề chứa kí hiệu với mọi, tồn tại (2 chunks) -> k-hi-u-v-i-m-i-t-n-t-i-t-nh-ng-sai-c-a-m-nh-ch-a-k-hi-u-v-i-m-i-t-n-t-i-2
+    OK (2602 chars)
+  [12] Lí thuyết nguyên hàm (3 chunks) -> l-thuy-t-nguy-n-h-m-2
+    OK (2288 chars)
+  [12] Lý thuyết Hệ tọa độ trong không gian (13 chunks) -> l-thuy-t-h-t-a-trong-kh-ng-gian-2
+    OK (6284 chars)
+  [12] Lý thuyết ứng dụng tích phân trong hình học (6 chunks) -> l-thuy-t-ng-d-ng-t-ch-ph-n-trong-h-nh-h-c-2
+    SKIP (LLM fail)
+  [12] Mệnh để phủ định (2 chunks) -> m-nh-ph-nh-2
+    SKIP (LLM fail)
+  [12] Nghiệm của bất phương trình bậc nhất hai ẩn - Miền nghiệm và cách biểu diễn miền nghiệm (3 chunks) -> nghi-m-c-a-b-t-ph-ng-tr-nh-b-c-nh-t-hai-n-mi-n-nghi-m-v-c-ch-bi-u-di-n-mi-n-nghi
+    OK (2094 chars)
+  [12] Nửa đường tròn đơn vị - Giá trị lượng giác của một góc (2 chunks) -> n-a-ng-tr-n-n-v-gi-tr-l-ng-gi-c-c-a-m-t-g-c
+    OK (2305 chars)
+  [12] Phép giao - Phép hợp - Hiệu của hai tập hợp - Phần bù (3 chunks) -> ph-p-giao-ph-p-h-p-hi-u-c-a-hai-t-p-h-p-ph-n-b-2
+    SKIP (LLM fail)
+  [12] Phương pháp biện luận số nghiệm của phương trình dựa vào đồ thị (11 chunks) -> ph-ng-ph-p-bi-n-lu-n-s-nghi-m-c-a-ph-ng-tr-nh-d-a-v-o-th-2
+    OK (2949 chars)
+  [12] Phương pháp tìm tiếp tuyến với đồ thị hàm số (11 chunks) -> ph-ng-ph-p-t-m-ti-p-tuy-n-v-i-th-h-m-s-2
+    OK (2839 chars)
+  [12] Quan hệ giữa các giá trị lượng giác của hai góc đặc biệt (4 chunks) -> quan-h-gi-a-c-c-gi-tr-l-ng-gi-c-c-a-hai-g-c-c-bi-t
+    SKIP (LLM fail)
+  [12] Sự biến thiên của hàm số bậc hai - Hàm số đồng biến - Hàm số nghịch biến (3 chunks) -> s-bi-n-thi-n-c-a-h-m-s-b-c-hai-h-m-s-ng-bi-n-h-m-s-ngh-ch-bi-n-2
+    OK (1780 chars)
+  [12] Tìm giá trị lớn nhất, giá trị nhỏ nhất của biểu thức F=ax+by trên một miền đa giác - Ứng dung của hệ bất phương trình bậc nhất hai ẩn (3 chunks) -> t-m-gi-tr-l-n-nh-t-gi-tr-nh-nh-t-c-a-bi-u-th-c-f-ax-by-tr-n-m-t-mi-n-a-gi-c-ng-d
+    OK (2598 chars)
+  [12] Tập hợp (2 chunks) -> t-p-h-p
+    SKIP (LLM fail)
+  [12] Tập hợp con - Hai tập hợp bằng nhau (2 chunks) -> t-p-h-p-con-hai-t-p-h-p-b-ng-nhau
+    OK (2102 chars)
+  [12] Tập xác định, tập giá trị của hàm số là - Tìm tập xác định, tập gía trị của hàm số cho trước (2 chunks) -> t-p-x-c-nh-t-p-gi-tr-c-a-h-m-s-l-t-m-t-p-x-c-nh-t-p-g-a-tr-c-a-h-m-s-cho-tr-c-2
+    SKIP (LLM fail)
+  [12] Tổng hợp công thức Ứng dụng đạo hàm để khảo sát và vẽ đồ thị hàm số (10 chunks) -> t-ng-h-p-c-ng-th-c-ng-d-ng-o-h-m-kh-o-s-t-v-v-th-h-m-s-2
+    OK (3054 chars)
+  [12] Tổng hợp lý thuyết Chương 3: Nguyên hàm, Tích phân và ứng dụng (13 chunks) -> t-ng-h-p-l-thuy-t-ch-ng-3-nguy-n-h-m-t-ch-ph-n-v-ng-d-ng
+    OK (2991 chars)
+  [12] Vị trí tương đối của hai đường thẳng (9 chunks) -> v-tr-t-ng-i-c-a-hai-ng-th-ng
+    SKIP (LLM fail)
+  [12] Xác suất có điều kiện (11 chunks) -> x-c-su-t-c-i-u-ki-n-2
+    OK (4075 chars)
+  [12] tam thức bậc hai (2 chunks) -> tam-th-c-b-c-hai-2
+    OK (860 chars)
+  [12] Điều kiện song song, vuông góc của hai mặt phẳng (10 chunks) -> i-u-ki-n-song-song-vu-ng-g-c-c-a-hai-m-t-ph-ng-2
+    OK (3066 chars)
+  [12] Điểm thuộc, không thuộc đồ thị hàm số - Vẽ đồ thị hàm số (2 chunks) -> i-m-thu-c-kh-ng-thu-c-th-h-m-s-v-th-h-m-s-2
+    SKIP (LLM fail)
+  [12] Định nghĩa mệnh đề chứa biến - Phân biệt mệnh đề và mệnh đề chứa biến (2 chunks) -> nh-ngh-a-m-nh-ch-a-bi-n-ph-n-bi-t-m-nh-v-m-nh-ch-a-bi-n-2
+    OK (1604 chars)
+  [12] Định nghĩa mệnh đề kéo theo - Tính đúng sai của mệnh đề kéo theo - Các cách phát biểu mệnh đề kéo theo (2 chunks) -> nh-ngh-a-m-nh-k-o-theo-t-nh-ng-sai-c-a-m-nh-k-o-theo-c-c-c-ch-ph-t-bi-u-m-nh-k-o
+    OK (1965 chars)
+  [12] Định nghĩa mệnh đề đảo - Phát biểu mệnh đề đảo - Hai mệnh đề tương đương - Phát biểu hai mệnh đề tương đương (2 chunks) -> nh-ngh-a-m-nh-o-ph-t-bi-u-m-nh-o-hai-m-nh-t-ng-ng-ph-t-bi-u-hai-m-nh-t-ng-ng-2
+    OK (2498 chars)
+  [12] Định nhĩa nghiệm của hệ bất phương trình bậc nhất hai ẩn - Định nghĩa miền nghiệm - Biểu diễn miền nghiệm của hệ bất phương trình (2 chunks) -> nh-nh-a-nghi-m-c-a-h-b-t-ph-ng-tr-nh-b-c-nh-t-hai-n-nh-ngh-a-mi-n-nghi-m-bi-u-di
+    SKIP (LLM fail)
+
+Done! Created: 73, Skipped: 38

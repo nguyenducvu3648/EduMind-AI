@@ -1,0 +1,1 @@
+"""MathMentor AI application package."""
