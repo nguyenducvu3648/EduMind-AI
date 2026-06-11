@@ -21,6 +21,7 @@ class User(Base):
     email: Mapped[str] = mapped_column(String(255), unique=True, nullable=False, index=True)
     hashed_password: Mapped[str] = mapped_column(String(255), nullable=False)
     grade_level: Mapped[int | None] = mapped_column(SmallInteger, nullable=True)
+    role: Mapped[str] = mapped_column(String(20), default="student", nullable=False)
     created_at: Mapped[datetime] = created_at_col()
     updated_at: Mapped[datetime] = updated_at_col()
 

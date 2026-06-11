@@ -1,9 +1,10 @@
 """Admin wiki endpoints — both RAG ingestion and LLM-Wiki article management."""
 
+import tempfile
 from pathlib import Path
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -13,7 +14,9 @@ from app.db.session import get_db_session
 from app.dependencies import get_embedding_service, verify_admin_api_key
 from app.wiki.embedding_service import BGEEmbeddingService
 from app.wiki.ingestion_pipeline import WikiIngestionPipeline
+from app.utils.logging import get_logger
 
+logger = get_logger(__name__)
 router = APIRouter(dependencies=[Depends(verify_admin_api_key)])
 
 
@@ -44,6 +47,57 @@ async def ingest_wiki(
         total_chunks=report.total_chunks,
         errors=report.errors,
         duration_ms=report.duration_ms,
+    )
+
+
+@router.post("/ingest/upload", response_model=WikiIngestResponse)
+async def ingest_wiki_upload(
+    files: list[UploadFile],
+    session: AsyncSession = Depends(get_db_session),
+    embedding_service: BGEEmbeddingService = Depends(get_embedding_service),
+) -> WikiIngestResponse:
+    """Upload and ingest one or more .md files from the browser."""
+    if not files:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="No files uploaded.")
+    pipeline = WikiIngestionPipeline(
+        session,
+        embedding_service=embedding_service,
+    )
+    errors: list[str] = []
+    total_chunks = 0
+    article_count = 0
+
+    with tempfile.TemporaryDirectory() as tmpdir:
+        for f in files:
+            if not f.filename or not f.filename.endswith(".md"):
+                errors.append(f"'{f.filename}': only .md files are supported")
+                continue
+            try:
+                content = await f.read()
+                filepath = Path(tmpdir) / f.filename
+                filepath.write_bytes(content)
+                chunk_ids = await pipeline.ingest_article(str(filepath))
+                total_chunks += len(chunk_ids)
+                article_count += 1
+                logger.info(
+                    "upload_ingest_ok",
+                    filename=f.filename,
+                    chunks=len(chunk_ids),
+                )
+            except Exception as exc:  # noqa: BLE001
+                errors.append(f"{f.filename}: {exc}")
+                await session.rollback()
+                logger.info(
+                    "upload_ingest_failed",
+                    filename=f.filename,
+                    error=str(exc),
+                )
+
+    return WikiIngestResponse(
+        total_articles=article_count,
+        total_chunks=total_chunks,
+        errors=errors,
+        duration_ms=0,
     )
 
 

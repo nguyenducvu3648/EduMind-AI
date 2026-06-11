@@ -54,6 +54,21 @@ class RefreshTokenRequest(BaseModel):
     refresh_token: str = Field(min_length=1)
 
 
+class AdminLoginRequest(BaseModel):
+    """Admin login request payload."""
+
+    email: EmailStr
+    password: str
+
+
+class AdminTokenResponse(BaseModel):
+    """Admin login response with user info."""
+
+    access_token: str
+    token_type: str = "bearer"
+    user: UserRead
+
+
 class UserProfileRead(BaseModel):
     """Full personalized profile representation."""
 

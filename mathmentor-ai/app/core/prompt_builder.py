@@ -125,10 +125,17 @@ class DynamicPromptBuilder:
         return (
             "## Mathematical Formatting Rules (MANDATORY)\n"
             "- All inline mathematics must be wrapped in single dollar signs: $x^2 + 2x + 1$\n"
-            "- All display/block mathematics must be wrapped in double dollar signs.\n"
+            "- All display/block mathematics must be wrapped in double dollar signs: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$\n"
             "- Never use plain text for mathematical expressions; wrap them in LaTeX delimiters.\n"
-            "- Never break a LaTeX expression across lines.\n"
-            "- For multi-step solutions, use aligned environments when helpful."
+            "- Never break a LaTeX expression across lines — keep each $$...$$ or $...$ on one line.\n"
+            "- For multi-step solutions, use $$ aligned or \\[ \\] environments when helpful.\n"
+            "- Double-check: every opening $ must have a closing $, every opening $$ must have a closing $$.\n"
+            "- Do NOT use \\[ or \\] without a matching pair — prefer $$...$$ instead.\n"
+            "- Fractions: use \\frac{}{}, never a/b in plain text.\n"
+            "- Square roots: use \\sqrt{}, never sqrt() in plain text.\n"
+            "- Ensure proper spacing around operators: $x^2 - 5x + 6 = 0$ NOT $x^2-5x+6=0$.\n"
+            "- Each step/paragraph must be separated by a blank line.\n"
+            "- Use numbered lists (1. 2. 3.) for multi-step solutions, not run-on paragraphs."
         )
 
     def _misconception_awareness(self, misconceptions: list[str]) -> str:

@@ -11,7 +11,6 @@ import {
   GraduationCap,
   ChevronLeft,
   ChevronRight,
-  Shield,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -69,6 +68,25 @@ export default function DashboardLayout({
   useEffect(() => {
     fetchSessions();
   }, [fetchSessions]);
+
+  // Auto-refresh session list every 5s while user is on chat pages
+  useEffect(() => {
+    if (!user) return;
+    const interval = setInterval(() => {
+      // Only poll when on chat pages (user might be chatting actively)
+      if (pathname?.startsWith("/chat")) {
+        listSessions().then(setSessions).catch(() => {});
+      }
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [user, pathname]);
+
+  // Also refresh when navigating back to chat list
+  useEffect(() => {
+    if (pathname === "/chat") {
+      fetchSessions();
+    }
+  }, [pathname, fetchSessions]);
 
   const handleNewChat = () => {
     router.push("/chat");
@@ -234,16 +252,6 @@ export default function DashboardLayout({
               </div>
             )}
             <div className="flex items-center gap-1">
-              <div title="Admin">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="shrink-0"
-                  onClick={() => router.push("/admin")}
-                >
-                  <Shield className="w-4 h-4 text-muted-foreground" />
-                </Button>
-              </div>
               <div title="Đăng xuất">
                 <Button
                   variant="ghost"

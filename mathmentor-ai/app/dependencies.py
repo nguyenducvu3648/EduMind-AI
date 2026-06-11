@@ -3,7 +3,7 @@
 from functools import lru_cache
 from uuid import UUID
 
-from fastapi import Depends, Header, HTTPException, status
+from fastapi import Depends, Header, HTTPException, Request, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -89,13 +89,32 @@ async def get_current_user(
 
 
 async def verify_admin_api_key(
+    request: Request,
     x_admin_api_key: str | None = Header(default=None),
+    session: AsyncSession = Depends(get_db_session),
     settings: Settings = Depends(get_settings),
 ) -> None:
-    """Validate admin API key for operational endpoints."""
+    """Validate admin access via API Key header or Bearer JWT with role='admin'."""
+    # Method 1: API Key (for scripts / automation)
     expected = settings.admin_api_key.get_secret_value()
-    if not x_admin_api_key or x_admin_api_key != expected:
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required.")
+    if x_admin_api_key and x_admin_api_key == expected:
+        return
+
+    # Method 2: Bearer JWT with role='admin' (for the admin UI)
+    auth_header = request.headers.get("Authorization", "")
+    if auth_header.startswith("Bearer "):
+        token = auth_header[7:]
+        try:
+            payload = decode_access_token(token, settings)
+            user_id = UUID(payload["sub"])
+        except (AuthenticationError, ValueError):
+            pass  # fall through to raise
+        else:
+            user = await session.get(User, user_id)
+            if user is not None and user.role == "admin":
+                return
+
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Admin access required.")
 
 
 async def ensure_user_exists(user_id: UUID, session: AsyncSession) -> User:

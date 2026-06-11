@@ -66,11 +66,24 @@ async def get_dashboard_stats(
         )
     ).scalar() or 0
 
-    # --- Topic distribution ---
+    # --- Topic distribution (from InteractionLog topics_detected) ---
+    topic_rows = await session.execute(
+        select(InteractionLog.topics_detected)
+        .where(InteractionLog.topics_detected.is_not(None))
+    )
     topic_counts: dict[str, int] = {}
+    for row in topic_rows:
+        topics = row[0]
+        if topics:
+            for t in topics:
+                topic_counts[t] = topic_counts.get(t, 0) + 1
+
+    # Fallback: also count from UserProfile topic_mastery for additional topics
     for p in profiles:
         for topic in (p.topic_mastery or {}):
-            topic_counts[topic] = topic_counts.get(topic, 0) + 1
+            # Only add if not already counted (wider coverage)
+            if topic not in topic_counts:
+                topic_counts[topic] = topic_counts.get(topic, 0) + 1
 
     # --- Strategy usage ---
     strategy_counts: dict[str, int] = {}
@@ -82,27 +95,50 @@ async def get_dashboard_stats(
         s = row[0]
         strategy_counts[s] = strategy_counts.get(s, 0) + 1
 
-    # --- Daily interactions (last 14 days) ---
-    fourteen_days_ago = now - timedelta(days=14)
+    # --- Daily interactions (last 7 days, zero-filled) ---
+    seven_days_ago = now - timedelta(days=7)
     daily_rows = await session.execute(
         select(
             func.date_trunc("day", InteractionLog.created_at).label("day"),
             func.count().label("cnt"),
         )
-        .where(InteractionLog.created_at >= fourteen_days_ago)
+        .where(InteractionLog.created_at >= seven_days_ago)
         .group_by(text("day"))
         .order_by(text("day"))
     )
-    daily_interactions = [
-        {"date": str(row.day.date()), "count": row.cnt}
-        for row in daily_rows
-    ]
+    daily_map: dict[str, int] = {
+        str(row.day.date()): row.cnt for row in daily_rows
+    }
+    # Zero-fill all 7 days
+    daily_interactions = []
+    for i in range(6, -1, -1):
+        day = (now - timedelta(days=i)).date()
+        date_str = str(day)
+        daily_interactions.append({
+            "date": date_str,
+            "count": daily_map.get(date_str, 0),
+        })
 
     # --- Weak topics (top 10) ---
+    # Primary: from UserProfile.weak_topics (EMA-driven, mirrors real mastery < 0.4)
     weak_topic_counts: dict[str, int] = {}
     for p in profiles:
         for t in (p.weak_topics or []):
             weak_topic_counts[t] = weak_topic_counts.get(t, 0) + 1
+    # Secondary: from interactions with low user_feedback (1-2)
+    low_feedback_topics = await session.execute(
+        select(InteractionLog.topics_detected)
+        .where(
+            InteractionLog.topics_detected.is_not(None),
+            InteractionLog.user_feedback.is_not(None),
+            InteractionLog.user_feedback <= 2,
+        )
+    )
+    for row in low_feedback_topics:
+        topics = row[0]
+        if topics:
+            for t in topics:
+                weak_topic_counts[t] = weak_topic_counts.get(t, 0) + 1
     top_weak_topics = sorted(weak_topic_counts.items(), key=lambda x: -x[1])[:10]
 
     # --- Chunk stats ---

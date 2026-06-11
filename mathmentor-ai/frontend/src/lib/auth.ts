@@ -1,5 +1,8 @@
+import axios from "axios";
 import { api } from "./api";
 import type { User } from "@/types";
+
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
 
 export interface AuthResult {
   user: User;
@@ -29,6 +32,11 @@ export async function login(email: string, password: string): Promise<AuthResult
     access_token: tokens.access_token,
     refresh_token: tokens.refresh_token,
   };
+}
+
+export async function adminLogin(email: string, password: string): Promise<{ access_token: string; user: User }> {
+  const res = await axios.post(`${API_BASE}/admin/auth/login`, { email, password });
+  return res.data;
 }
 
 export async function register(

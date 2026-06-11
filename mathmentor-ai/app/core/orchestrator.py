@@ -165,41 +165,42 @@ class MathTutorOrchestrator:
 
         queries = await self.query_rewriter.rewrite(message, intent)
         metadata_filter = self._metadata_filter(user, intent)
-        context_chunks: list[RetrievedChunk] = []
-        wiki_article_data: dict | None = None
 
-        # ─── Step 1: Fetch RAG context ───
-        try:
-            retrieved = await self.retriever.retrieve(
-                queries,
-                metadata_filter,
-                profile,
-                top_k_semantic=self.settings.rag_top_k_semantic,
-                top_k_bm25=self.settings.rag_top_k_bm25,
-                final_top_k=max(10, self.settings.rag_final_top_k),
-            )
-            context_chunks = await self.reranker.rerank(
-                message,
-                retrieved,
-                top_k=self.settings.rag_final_top_k,
-            )
-        except Exception as exc:
-            logger.info("rag_pipeline_fallback", stage="rag", status="fallback", error=str(exc))
-
-        # ─── Step 2: Check LLM-Wiki for relevant articles ───
-        try:
-            wiki_article_data = await self._find_wiki_article(
-                intent.topic_tags, user.grade_level
-            )
-            if wiki_article_data:
-                logger.info(
-                    "wiki_article_found",
-                    stage="llm_wiki",
-                    slug=wiki_article_data.get("slug"),
-                    title=wiki_article_data.get("title"),
+        # ─── Steps 1 & 2: Fetch RAG context AND LLM-Wiki IN PARALLEL ───
+        # Orchestration decides: can use one, both, or fallback independently.
+        async def _do_rag() -> list[RetrievedChunk]:
+            try:
+                retrieved = await self.retriever.retrieve(
+                    queries,
+                    metadata_filter,
+                    profile,
+                    top_k_semantic=self.settings.rag_top_k_semantic,
+                    top_k_bm25=self.settings.rag_top_k_bm25,
+                    final_top_k=max(10, self.settings.rag_final_top_k),
                 )
-        except Exception as exc:
-            logger.info("wiki_article_lookup_failed", stage="llm_wiki", error=str(exc))
+                return await self.reranker.rerank(
+                    message, retrieved, top_k=self.settings.rag_final_top_k,
+                )
+            except Exception as exc:
+                logger.info("rag_pipeline_fallback", stage="rag", status="fallback", error=str(exc))
+                return []
+
+        async def _do_wiki() -> dict | None:
+            try:
+                article = await self._find_wiki_article(intent.topic_tags, user.grade_level)
+                if article:
+                    logger.info(
+                        "wiki_article_found", stage="llm_wiki",
+                        slug=article.get("slug"), title=article.get("title"),
+                    )
+                return article
+            except Exception as exc:
+                logger.info("wiki_article_lookup_failed", stage="llm_wiki", error=str(exc))
+                return None
+
+        context_chunks, wiki_article_data = await asyncio.gather(
+            _do_rag(), _do_wiki(),
+        )
 
         # ─── Step 3: Build prompt with both RAG + LLM-Wiki ───
         context_bundle = self.compressor.compress(

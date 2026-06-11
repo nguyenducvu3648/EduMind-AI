@@ -54,12 +54,18 @@ export default function DashboardTab({
   useEffect(() => {
     async function load() {
       try {
-        const res = await axios.get(`${apiBase}/admin/dashboard/stats`, {
-          headers: {
-            "X-Admin-Api-Key": adminKey,
-            Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-          },
-        });
+        const adminToken = localStorage.getItem("admin_token");
+        const headers: Record<string, string> = {
+          "Content-Type": "application/json",
+        };
+        // Try JWT first (admin page), fallback API Key (old flow)
+        if (adminToken) {
+          headers["Authorization"] = `Bearer ${adminToken}`;
+        } else if (adminKey) {
+          headers["X-Admin-Api-Key"] = adminKey;
+          headers["Authorization"] = `Bearer ${localStorage.getItem("access_token")}`;
+        }
+        const res = await axios.get(`${apiBase}/admin/dashboard/stats`, { headers });
         setStats(res.data);
       } catch {
         // silent
@@ -165,7 +171,7 @@ export default function DashboardTab({
           <CardHeader className="pb-3">
             <CardTitle className="text-sm flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-primary" />
-              Tương tác theo ngày (14 ngày)
+              Tương tác theo ngày (7 ngày)
             </CardTitle>
           </CardHeader>
           <CardContent>
