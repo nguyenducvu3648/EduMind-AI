@@ -20,6 +20,7 @@ class DynamicPromptBuilder:
             self._pedagogical_directive(strategy, bloom_level, scaffolding_depth),
             self._scaffolding_rules(scaffolding_depth),
             self._cognitive_load_rules(user_state.cognitive_load_estimate),
+            self._interactive_teaching_rules(user_state.learner_type, strategy),
             self._latex_formatting_rules(),
             self._misconception_awareness(user_state.misconception_detected),
             self._response_length_rules(user_state),
@@ -123,19 +124,26 @@ class DynamicPromptBuilder:
 
     def _latex_formatting_rules(self) -> str:
         return (
-            "## Mathematical Formatting Rules (MANDATORY)\n"
-            "- All inline mathematics must be wrapped in single dollar signs: $x^2 + 2x + 1$\n"
-            "- All display/block mathematics must be wrapped in double dollar signs: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$\n"
-            "- Never use plain text for mathematical expressions; wrap them in LaTeX delimiters.\n"
+            "## Mathematical Formatting Rules (CRITICAL for frontend rendering)\n"
+            "- 【RULE】ALL mathematical expressions MUST be wrapped in $...$ (inline) or $$...$$ (display).\n"
+            "  Example WRONG: \overrightarrow{AB} + \overrightarrow{BC} = \overrightarrow{AC}\n"
+            "  Example RIGHT: $\overrightarrow{AB} + \overrightarrow{BC} = \overrightarrow{AC}$\n"
+            "  Example WRONG: Ta có công thức ax^2 + bx + c = 0\n"
+            "  Example RIGHT: Ta có công thức $ax^2 + bx + c = 0$\n"
+            "- 【RULE】Every LaTeX command (\\frac, \\sqrt, \\overrightarrow, \\vec, \\sum, \\int, \\sin, etc.) "
+            "must be inside $...$ or $$...$$. NOTHING escapes this rule.\n"
+            "- 【RULE】After writing math, double-check: is there any \\command outside $...$? If yes, fix it.\n"
+            "- Inline: $x^2 + 2x + 1 = 0$ — single dollars on both sides.\n"
+            "- Display/block: $$x = \\frac{-b \\pm \\sqrt{b^2 - 4ac}}{2a}$$ — double dollars.\n"
             "- Never break a LaTeX expression across lines — keep each $$...$$ or $...$ on one line.\n"
-            "- For multi-step solutions, use $$ aligned or \\[ \\] environments when helpful.\n"
-            "- Double-check: every opening $ must have a closing $, every opening $$ must have a closing $$.\n"
-            "- Do NOT use \\[ or \\] without a matching pair — prefer $$...$$ instead.\n"
+            "- For multi-step solutions, use $$ aligned environments when helpful.\n"
             "- Fractions: use \\frac{}{}, never a/b in plain text.\n"
             "- Square roots: use \\sqrt{}, never sqrt() in plain text.\n"
             "- Ensure proper spacing around operators: $x^2 - 5x + 6 = 0$ NOT $x^2-5x+6=0$.\n"
             "- Each step/paragraph must be separated by a blank line.\n"
-            "- Use numbered lists (1. 2. 3.) for multi-step solutions, not run-on paragraphs."
+            "- Use numbered lists (1. 2. 3.) for multi-step solutions, not run-on paragraphs.\n"
+            "- !! CRITICAL: NEVER output the same LaTeX formula twice in a row. If you reuse a formula, "
+            "write it only once and refer back to it. Duplicate formulas like $$x^2$$ $$x^2$$ are invalid."
         )
 
     def _misconception_awareness(self, misconceptions: list[str]) -> str:
@@ -146,11 +154,72 @@ class DynamicPromptBuilder:
             f"Actively address these likely misconceptions: {', '.join(misconceptions)}."
         )
 
+    def _interactive_teaching_rules(self, learner_type: str, strategy: TeachingStrategy) -> str:
+        """Rules for interactive teaching — keep it conversational, not a lecture."""
+
+        # Common rules for all types
+        rules = [
+            "## Interactive Teaching Rules (CRITICAL)",
+            "- Do NOT write a full essay or textbook page. Teach like a real tutor: conversational, not encyclopedic.",
+            "- After explaining one key idea, STOP and ask a short check-in question to engage the student.",
+            "- Use short paragraphs (max 3 sentences). One idea per paragraph.",
+            "- Do NOT give 3+ examples in a row. Give one example, then ask the student to try the next.",
+            "- If the student gave a question, answer it directly FIRST, then extend.",
+            "- Use natural Vietnamese, not formal academic language. Speak like a friendly teacher.",
+        ]
+
+        if learner_type == "struggling":
+            rules.extend([
+                "- Give AT MOST 1 short example per explanation. Too many examples overwhelm struggling students.",
+                "- After each step, ask a simple yes/no or short-answer question before moving on.",
+                "- NEVER dump all information at once. Build understanding piece by piece.",
+                "- If the student seems silent or passive, end with one small challenge: 'Em thử làm tương tự nhé?'",
+            ])
+        elif learner_type == "advanced":
+            rules.extend([
+                "- Be concise. Give the core idea and one challenging example. Then ask how they'd apply it.",
+                "- Ask open-ended questions: 'Em thấy quy tắc này giống với quy tắc nào đã học?'",
+                "- Encourage the student to generalize: 'Theo em, quy tắc này có đúng với 4 điểm không?'",
+            ])
+        else:  # average
+            rules.extend([
+                "- Give 1-2 clear examples. Then ask the student to apply to a similar case.",
+                "- After the explanation, ask: 'Em hiểu rồi chứ? Em thử làm bài tương tự nhé?'",
+                "- If describing a rule, state it clearly in one sentence first, then illustrate briefly.",
+            ])
+
+        # Strategy-specific additions
+        if strategy in (TeachingStrategy.SOCRATIC, TeachingStrategy.HINT_FIRST, TeachingStrategy.METACOGNITIVE):
+            rules.extend([
+                "- This is a Socratic session: your goal is to make the student TALK, not to deliver content.",
+                "- Each response should end with a question. Never give a full answer unprompted.",
+            ])
+        elif strategy == TeachingStrategy.STEP_BY_STEP:
+            rules.extend([
+                "- Each response covers ONE step. After each step, pause and check: 'Em đã hiểu bước này chưa?'",
+                "- Do NOT outline all steps upfront. Reveal them one by one.",
+            ])
+
+        return "\n".join(rules)
+
     def _response_length_rules(self, user_state: UserStateSnapshot) -> str:
         if user_state.learner_type == "advanced":
-            return "## Response Length\nBe concise and emphasize strategy over repetition."
+            return (
+                "## Response Length / Concision\n"
+                "Keep responses short (max 4 sentences). "
+                "Prioritize strategy and connection-making over repetition. "
+                "End with a question that challenges the student to apply the concept."
+            )
         if user_state.learner_type == "struggling":
             return (
-                "## Response Length\nUse a supportive explanation with small steps and checkpoints."
+                "## Response Length / Concision\n"
+                "Keep responses VERY short: max 2-3 sentences per turn. "
+                "Only give ONE small step or ONE idea per response. "
+                "Use simple words, short sentences. End with: 'Em hiểu chưa?' or 'Em làm tiếp nhé?'"
+                "Do NOT overwhelm with multiple examples, formulas, or variations at once."
             )
-        return "## Response Length\nUse a balanced response."
+        return (
+            "## Response Length / Concision\n"
+            "Keep responses moderate (3-5 sentences). "
+            "Give 1-2 sentences of explanation, one example if helpful, then a check-in question."
+        )

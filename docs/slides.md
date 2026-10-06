@@ -51,10 +51,11 @@
 └────────────────────┬────────────────────────────┘
                      │
 ┌────────────────────▼────────────────────────────┐
-│           Orchestration Layer (Core)             │
-│  Intent Detection → Query Rewriting → RAG       │
-│  → Pedagogy Selection → Prompt Building → LLM   │
-│  → Memory Update                                │
+│          Orchestration Layer (Core)              │
+│  Intent Detection → Query Rewriting             │
+│  → Pedagogy Selection → Prompt Building         │
+│  → Response Postprocessing                      │
+│  ── gọi RAG, LLM, Memory ──                     │
 └────────────────────┬────────────────────────────┘
                      │
 ┌────────────────────▼────────────────────────────┐
@@ -222,28 +223,55 @@ new_mastery = α × signal + (1 - α) × old_mastery    (α = 0.35)
 
 ---
 
-## Slide 9 — Pedagogy: Chiến lược giảng dạy thích ứng
+## Slide 9 — Pedagogy: Tự động chọn cách dạy
 
-**Ma trận quyết định** — chọn chiến lược dựa trên learner type + question type:
+### Dữ liệu từ đâu?
 
-| Loại học sinh | Problem Solving | Concept Explanation |
-|--------------|----------------|-------------------|
-| **Struggling** (mastery < 40%) | HINT_FIRST hoặc STEP_BY_STEP | DIRECT_EXPLANATION |
-| **Average** (40–70%) | WORKED_EXAMPLE | SOCRATIC |
-| **Advanced** (> 70%) | SOCRATIC | METACOGNITIVE |
+Hệ thống phân loại học sinh dựa trên **3 trường trong DB**:
 
-**Override:**
-- Cognitive load > 80% → DIRECT_EXPLANATION (giảm tải)
-- Misconception detected → STEP_BY_STEP (sửa ngay)
+```
+UserProfile (bảng user_profiles)
+├── topic_mastery: {"quadratic_equations": 0.7, "derivative": 0.3}
+│   → Độ thành thạo từng chủ đề (0.0 - 1.0)
+│   → Mastery < 0.4 → weak_topics
+│   → Mastery > 0.75 → strong_topics
+├── hint_dependency_level: 0.6
+│   → Hay phải gợi ý không? (0.0 - 1.0)
+├── error_recurrence_rate: 0.4
+│   → Có tái phạm lỗi cũ không? (0.0 - 1.0)
+└── misconception_patterns: [...]
+    → Những sai lầm thường gặp
+```
 
-**Bloom Target Level:**
-- Struggling → REMEMBER / UNDERSTAND
-- Average → APPLY / ANALYZE
-- Advanced → EVALUATE / CREATE
+Ví dụ:
+- `topic_mastery["quadratic_equations"] = 0.25` → Học sinh **yếu** → struggling
+- `topic_mastery["quadratic_equations"] = 0.6` → Học sinh **trung bình** → average
+- `topic_mastery["quadratic_equations"] = 0.85` → Học sinh **khá** → advanced
 
-**Scaffolding Depth (1–5):**
-- Struggling: 4, Average: 3, Advanced: 2
-- Cognitive load > 70% → +1
+→ `learner_type` được xác định = trung bình cộng mastery của các chủ đề liên quan đến câu hỏi.
+
+### Quy tắc chọn cách dạy
+
+```
+                      Loại câu hỏi
+              Giải bài tập          Giải thích khái niệm
+Yếu (mastery < 40%)   → Gợi ý / Từng bước   → Giảng thẳng
+TB (40-70%)           → Làm mẫu              → Hỏi ngược
+Khá ( > 70%)          → Hỏi ngược            → Tự nhận thức
+```
+
+**Ngoại lệ:** Quá tải → Giảng thẳng. Sai lầm tái diễn → Từng bước.
+
+### 6 cách dạy
+
+| Cách dạy | Làm gì? |
+|----------|---------|
+| **Giảng thẳng** | Giải thích luôn, rõ ràng |
+| **Từng bước** | Chia nhỏ, làm từng bước |
+| **Gợi ý trước** | Gợi ý rồi để học sinh tự làm |
+| **Làm mẫu** | Cho bài mẫu hoàn chỉnh |
+| **Hỏi ngược** | Đặt câu hỏi, học sinh tự nghĩ |
+| **Tự nhận thức** | Hỏi "Em nghĩ thế nào?" |
 
 ---
 
